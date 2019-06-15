@@ -9,7 +9,7 @@ processing library for PHP. This package implements common classes required by P
 
 ## Installation
 
-    composer require payconn/ipara:~1.0.0
+    composer require payconn/ipara:~1.0
 
 ## Supported card families
 * Bonus 
