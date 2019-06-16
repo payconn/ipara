@@ -39,17 +39,19 @@ abstract class IparaRequest extends AbstractRequest
 
     public function getTokenHash(): string
     {
-        /** @var Purchase|Authorize|Refund $model */
-        $model = $this->getModel();
         /** @var Token $token */
         $token = $this->getToken();
 
         if ($this->getModel() instanceof Refund) {
+            /** @var Refund $model */
+            $model = $this->getModel();
             $hash = $token->getPrivateKey().
                 $model->getOrderId().
                 $this->getIpAddress().
                 $model->getTransactionDate();
         } else {
+            /** @var Purchase|Authorize $model */
+            $model = $this->getModel();
             $hash = $token->getPrivateKey().
                 $model->getOrderId().
                 $this->getAmount().
