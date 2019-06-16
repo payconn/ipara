@@ -42,13 +42,13 @@ class PurchaseRequest extends IparaRequest
         }
         /** @var HttpClient $httpClient */
         $httpClient = $this->getHttpClient();
-        $response = $httpClient->request('POST', $model->getBaseUrl(), [
+        $response = $httpClient->request('POST', $model->getBaseUrl().'/rest/payment/auth', [
             'body' => $body->asXML(),
             'headers' => [
                 'Accept' => 'application/xml',
                 'Content-type' => 'application/xml',
                 'version' => '1.0',
-                'token' => $this->getTokenHash(),
+                'token' => $this->getPurchasingTokenHash(),
                 'transactionDate' => $this->transactionDate,
             ],
         ]);

@@ -8,6 +8,7 @@ use Payconn\Common\ModelInterface;
 use Payconn\Common\TokenInterface;
 use Payconn\Ipara\Model\Authorize;
 use Payconn\Ipara\Model\Purchase;
+use Payconn\Ipara\Model\Refund;
 use Payconn\Ipara\Token;
 
 abstract class IparaRequest extends AbstractRequest
@@ -23,7 +24,8 @@ abstract class IparaRequest extends AbstractRequest
     public function getAmount(): ?float
     {
         if ($this->getModel() instanceof Purchase
-            || $this->getModel() instanceof Authorize) {
+            || $this->getModel() instanceof Authorize
+            || $this->getModel() instanceof Refund) {
             return $this->getModel()->getAmount() * 100;
         }
 
@@ -35,13 +37,12 @@ abstract class IparaRequest extends AbstractRequest
         return $this->getModel()->isTestMode() ? 'T' : 'P';
     }
 
-    public function getTokenHash(): string
+    public function getPurchasingTokenHash(): string
     {
-        /** @var Purchase|Authorize $model */
-        $model = $this->getModel();
         /** @var Token $token */
         $token = $this->getToken();
-
+        /** @var Purchase|Authorize $model */
+        $model = $this->getModel();
         $hash = $token->getPrivateKey().
             $model->getOrderId().
             $this->getAmount().
@@ -55,6 +56,17 @@ abstract class IparaRequest extends AbstractRequest
             $model->getLastName().
             $model->getEmail().
             $this->transactionDate;
+
+        return $token->getPublicKey().':'.base64_encode(sha1($hash, true));
+    }
+
+    public function getRefundTokenHash(): string
+    {
+        /** @var Token $token */
+        $token = $this->getToken();
+        /** @var Refund $model */
+        $model = $this->getModel();
+        $hash = $token->getPrivateKey().$model->getOrderId().$this->getIpAddress().$model->getTransactionDate();
 
         return $token->getPublicKey().':'.base64_encode(sha1($hash, true));
     }

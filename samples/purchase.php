@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-$token = new \Payconn\Ipara\Token('NRI769Q8RMLW0VB', 'VZXBBIRSVJSZTWYUP6O13G4A4');
+$token = new \Payconn\Ipara\Token('YOUR_PUBLIC_KEY', 'YOUR_PRIVATE_KEY');
 $purchase = new \Payconn\Ipara\Model\Purchase();
 $purchase->setTestMode(true);
 $purchase->setAmount(100);
@@ -19,4 +19,5 @@ print_r([
     'message' => $response->getResponseMessage(),
     'code' => $response->getResponseCode(),
     'orderId' => $response->getOrderId(),
+    'body' => $response->getResponseBody(),
 ]);
