@@ -6,6 +6,9 @@ use Payconn\Common\AbstractRequest;
 use Payconn\Common\HttpClientInterface;
 use Payconn\Common\ModelInterface;
 use Payconn\Common\TokenInterface;
+use Payconn\Ipara\Model\Authorize;
+use Payconn\Ipara\Model\Purchase;
+use Payconn\Ipara\Token;
 
 abstract class IparaRequest extends AbstractRequest
 {
@@ -29,20 +32,25 @@ abstract class IparaRequest extends AbstractRequest
 
     public function getTokenHash(): string
     {
-        $hash = $this->getToken()->getPrivateKey().
-            $this->getModel()->getOrderId().
+        /** @var Purchase|Authorize $model */
+        $model = $this->getModel();
+        /** @var Token $token */
+        $token = $this->getToken();
+
+        $hash = $token->getPrivateKey().
+            $model->getOrderId().
             $this->getAmount().
             $this->getMode().
-            $this->getModel()->getCreditCard()->getHolderName().
-            $this->getModel()->getCreditCard()->getNumber().
-            $this->getModel()->getCreditCard()->getExpireMonth()->format('m').
-            $this->getModel()->getCreditCard()->getExpireYear()->format('y').
-            $this->getModel()->getCreditCard()->getCvv().
-            $this->getModel()->getFirstName().
-            $this->getModel()->getLastName().
-            $this->getModel()->getEmail().
+            $model->getCreditCard()->getHolderName().
+            $model->getCreditCard()->getNumber().
+            $model->getCreditCard()->getExpireMonth()->format('m').
+            $model->getCreditCard()->getExpireYear()->format('y').
+            $model->getCreditCard()->getCvv().
+            $model->getFirstName().
+            $model->getLastName().
+            $model->getEmail().
             $this->transactionDate;
 
-        return $this->getToken()->getPublicKey().':'.base64_encode(sha1($hash, true));
+        return $token->getPublicKey().':'.base64_encode(sha1($hash, true));
     }
 }
