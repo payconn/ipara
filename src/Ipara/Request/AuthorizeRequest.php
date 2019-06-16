@@ -33,7 +33,7 @@ class AuthorizeRequest extends IparaRequest
                 'successUrl' => $model->getSuccessfulUrl(),
                 'failureUrl' => $model->getFailureUrl(),
                 'amount' => $this->getAmount(),
-                'token' => $this->getTokenHash(),
+                'token' => $this->getPurchasingTokenHash(),
                 'transactionDate' => $this->transactionDate,
             ],
         ]);

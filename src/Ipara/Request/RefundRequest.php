@@ -17,7 +17,7 @@ class RefundRequest extends IparaRequest
         $httpClient = $this->getHttpClient();
         $headers = [
             'version' => '1.0',
-            'token' => $this->getTokenHash(),
+            'token' => $this->getRefundTokenHash(),
             'transactionDate' => $model->getTransactionDate(),
         ];
         // inquiry refundHash

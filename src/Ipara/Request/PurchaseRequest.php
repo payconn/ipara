@@ -48,7 +48,7 @@ class PurchaseRequest extends IparaRequest
                 'Accept' => 'application/xml',
                 'Content-type' => 'application/xml',
                 'version' => '1.0',
-                'token' => $this->getTokenHash(),
+                'token' => $this->getPurchasingTokenHash(),
                 'transactionDate' => $this->transactionDate,
             ],
         ]);
