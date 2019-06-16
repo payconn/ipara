@@ -24,7 +24,7 @@ abstract class IparaRequest extends AbstractRequest
     {
         if ($this->getModel() instanceof Purchase
             || $this->getModel() instanceof Authorize) {
-            return $this->getModel() * 100;
+            return $this->getModel()->getAmount() * 100;
         }
 
         return null;
