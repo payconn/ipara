@@ -8,31 +8,48 @@ class PurchaseResponse extends AbstractResponse
 {
     public function isSuccessful(): bool
     {
-        // TODO: Implement isSuccessful() method.
+        if ('1' == $this->getParameters()->get('result')) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getResponseMessage(): string
     {
-        // TODO: Implement getResponseMessage() method.
+        if ($this->isSuccessful()) {
+            return 'Approved';
+        }
+
+        return $this->getParameters()->get('errorMessage');
     }
 
     public function getResponseCode(): string
     {
-        // TODO: Implement getResponseCode() method.
+        if ($this->isSuccessful()) {
+            return '00';
+        }
+
+        return $this->getParameters()->get('errorCode');
     }
 
     public function getResponseBody(): array
     {
-        // TODO: Implement getResponseBody() method.
+        return $this->getParameters()->all();
     }
 
     public function isRedirection(): bool
     {
-        // TODO: Implement isRedirection() method.
+        return false;
     }
 
     public function getRedirectForm(): ?string
     {
-        // TODO: Implement getRedirectForm() method.
+        return null;
+    }
+
+    public function getOrderId(): string
+    {
+        return $this->getParameters()->get('orderId');
     }
 }
