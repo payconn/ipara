@@ -10,6 +10,7 @@ use Payconn\Common\Model\CompleteInterface;
 use Payconn\Common\Model\PurchaseInterface;
 use Payconn\Common\Model\RefundInterface;
 use Payconn\Common\ResponseInterface;
+use Payconn\Ipara\Request\AuthorizeRequest;
 use Payconn\Ipara\Request\PurchaseRequest;
 
 class Ipara extends AbstractGateway
@@ -26,9 +27,9 @@ class Ipara extends AbstractGateway
         return $this->createRequest(PurchaseRequest::class, $purchase);
     }
 
-    public function authorize(AuthorizeInterface $model): ResponseInterface
+    public function authorize(AuthorizeInterface $authorize): ResponseInterface
     {
-        // TODO: Implement authorize() method.
+        return $this->createRequest(AuthorizeRequest::class, $authorize);
     }
 
     public function complete(CompleteInterface $model): ResponseInterface

@@ -6,6 +6,7 @@ use Payconn\Common\AbstractRequest;
 use Payconn\Common\HttpClient;
 use Payconn\Common\ResponseInterface;
 use Payconn\Ipara\Model\Purchase;
+use Payconn\Ipara\Response\PurchaseResponse;
 use Payconn\Ipara\Token;
 
 class PurchaseRequest extends AbstractRequest
@@ -75,7 +76,6 @@ class PurchaseRequest extends AbstractRequest
             ],
         ]);
 
-        var_dump($response->getBody()->getContents());
-        exit;
+        return new PurchaseResponse($this->getModel(), (array) @simplexml_load_string($response->getBody()->getContents()));
     }
 }
