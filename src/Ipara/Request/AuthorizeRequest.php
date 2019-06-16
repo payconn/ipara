@@ -38,6 +38,8 @@ class AuthorizeRequest extends IparaRequest
             ],
         ]);
 
-        return new AuthorizeResponse($this->getModel(), (array) @simplexml_load_string($response->getBody()->getContents()));
+        return new AuthorizeResponse($this->getModel(), [
+            'content' => $response->getBody()->getContents(),
+        ]);
     }
 }

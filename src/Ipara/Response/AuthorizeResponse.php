@@ -17,11 +17,19 @@ class AuthorizeResponse extends AbstractResponse
 
     public function getResponseMessage(): string
     {
+        if (!$this->isSuccessful()) {
+            return $this->getParameters()->get('errorMessage');
+        }
+
         return 'Redirected';
     }
 
     public function getResponseCode(): string
     {
+        if (!$this->isSuccessful()) {
+            return $this->getParameters()->get('errorCode');
+        }
+
         return '01';
     }
 
