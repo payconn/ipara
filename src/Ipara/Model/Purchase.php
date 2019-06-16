@@ -63,9 +63,9 @@ class Purchase extends AbstractModel implements PurchaseInterface
     }
 
     /**
-     * @return Product[]|null
+     * @return Product[]
      */
-    public function getProducts(): ?array
+    public function getProducts(): array
     {
         return $this->products;
     }
