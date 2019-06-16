@@ -14,4 +14,9 @@ $purchase->setOrderId('Payconn'.time());
 $purchase->addProduct((new \Payconn\Ipara\Product('001', 'Test', 100)));
 $purchase->setCreditCard((new \Payconn\Common\CreditCard('4282209027132016', '2024', '12', '358'))->setHolderName('MuratSac'));
 $response = (new \Payconn\Ipara\Ipara($token))->purchase($purchase);
-print_r($response);
+print_r([
+    'isSuccessful' => $response->isSuccessful(),
+    'message' => $response->getResponseMessage(),
+    'code' => $response->getResponseCode(),
+    'orderId' => $response->getOrderId(),
+]);

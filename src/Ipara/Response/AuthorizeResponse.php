@@ -8,31 +8,35 @@ class AuthorizeResponse extends AbstractResponse
 {
     public function isSuccessful(): bool
     {
-        // TODO: Implement isSuccessful() method.
+        if (0 == $this->getParameters()->get('result')) {
+            return false;
+        }
+
+        return true;
     }
 
     public function getResponseMessage(): string
     {
-        // TODO: Implement getResponseMessage() method.
+        return 'Redirected';
     }
 
     public function getResponseCode(): string
     {
-        // TODO: Implement getResponseCode() method.
+        return '01';
     }
 
     public function getResponseBody(): array
     {
-        // TODO: Implement getResponseBody() method.
+        return $this->getParameters()->all();
     }
 
     public function isRedirection(): bool
     {
-        // TODO: Implement isRedirection() method.
+        return true;
     }
 
     public function getRedirectForm(): ?string
     {
-        // TODO: Implement getRedirectForm() method.
+        return $this->getParameters()->get('content');
     }
 }
