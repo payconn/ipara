@@ -16,7 +16,7 @@ $complete->setReturnParams([
     'threeDSecureCode' => '002Ddg+sMQOrdYxQdtsg/UNmH1mjHMCh/vq+pyljO6tID07sShj5B+1c9zH/6TSnCmwZlUfOmztiNcF1sLhRkdQDw==',
     'transactionDate' => '2019-06-18 21:28:50',
 ]);
-$response = (new \Payconn\Ipara\Ipara($token))->complete($complete);
+$response = (new \Payconn\Ipara($token))->complete($complete);
 print_r([
     'isSuccessful' => (int) $response->isSuccessful(),
     'message' => $response->getResponseMessage(),

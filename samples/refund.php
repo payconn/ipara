@@ -9,7 +9,7 @@ $refund->setAmount(100);
 $refund->setOrderId('Payconn1560711502');
 $refund->setTransactionDate('2019-06-16 21:55:01');
 $refund->setOrderHash('8h/3qkGToP6Q9QCGu4HWcMrIJRw=');
-$response = (new \Payconn\Ipara\Ipara($token))->refund($refund);
+$response = (new \Payconn\Ipara($token))->refund($refund);
 print_r([
     'isSuccessful' => (int) $response->isSuccessful(),
     'message' => $response->getResponseMessage(),

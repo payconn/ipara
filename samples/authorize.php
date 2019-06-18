@@ -15,5 +15,5 @@ $authorize->setFailureUrl('http://127.0.0.1:8000/failure');
 $authorize->addProduct((new \Payconn\Ipara\Product('001', 'Test', 100)));
 $authorize->setCreditCard((new \Payconn\Common\CreditCard('4282209027132016', '2024', '12', '358'))->setHolderName('MuratSac'));
 $authorize->generateOrderId();
-$response = (new \Payconn\Ipara\Ipara($token))->authorize($authorize);
+$response = (new \Payconn\Ipara($token))->authorize($authorize);
 print_r($response);

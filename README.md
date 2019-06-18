@@ -9,7 +9,7 @@ processing library for PHP. This package implements common classes required by P
 
 ## Installation
 
-    composer require payconn/ipara:~1.0
+    $ composer require payconn/ipara:~1.0
 
 ## Supported card families
 * Bonus 
@@ -30,7 +30,27 @@ processing library for PHP. This package implements common classes required by P
 
 ## Basic Usage
 ```php
+use Payconn\Ipara;
+use Payconn\Ipara\Token;
+use Payconn\Ipara\Product;
+use Payconn\Ipara\Model\Purchase;
+use Payconn\Common\CreditCard;
 
+$token = new Token('YOUR_PUBLIC_KEY', 'YOUR_PRIVATE_KEY');
+$purchase = new Purchase();
+$purchase->setTestMode(true);
+$purchase->setAmount(100);
+$purchase->setInstallment(1);
+$purchase->setFirstName('Murat');
+$purchase->setLastName('Sac');
+$purchase->setEmail('muratsac@mail.com');
+$purchase->addProduct((new Product('001', 'Test', 100)));
+$purchase->setCreditCard((new CreditCard('4282209027132016', '2024', '12', '358'))->setHolderName('MuratSac'));
+$purchase->generateOrderId();
+$response = (new Ipara($token))->purchase($purchase);
+if($response->isSuccessful()){
+    // success!
+}
 ```
 
 ## Change log
