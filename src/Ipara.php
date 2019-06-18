@@ -1,6 +1,6 @@
 <?php
 
-namespace Payconn\Ipara;
+namespace Payconn;
 
 use Payconn\Common\AbstractGateway;
 use Payconn\Common\BaseUrl;
