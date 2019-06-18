@@ -9,7 +9,6 @@ use Payconn\Common\TokenInterface;
 use Payconn\Ipara\Model\Authorize;
 use Payconn\Ipara\Model\Purchase;
 use Payconn\Ipara\Model\Refund;
-use Payconn\Ipara\Token;
 
 abstract class IparaRequest extends AbstractRequest
 {
@@ -35,39 +34,5 @@ abstract class IparaRequest extends AbstractRequest
     public function getMode(): string
     {
         return $this->getModel()->isTestMode() ? 'T' : 'P';
-    }
-
-    public function getPurchasingTokenHash(): string
-    {
-        /** @var Token $token */
-        $token = $this->getToken();
-        /** @var Purchase|Authorize $model */
-        $model = $this->getModel();
-        $hash = $token->getPrivateKey().
-            $model->getOrderId().
-            $this->getAmount().
-            $this->getMode().
-            $model->getCreditCard()->getHolderName().
-            $model->getCreditCard()->getNumber().
-            $model->getCreditCard()->getExpireMonth()->format('m').
-            $model->getCreditCard()->getExpireYear()->format('y').
-            $model->getCreditCard()->getCvv().
-            $model->getFirstName().
-            $model->getLastName().
-            $model->getEmail().
-            $this->transactionDate;
-
-        return $token->getPublicKey().':'.base64_encode(sha1($hash, true));
-    }
-
-    public function getRefundTokenHash(): string
-    {
-        /** @var Token $token */
-        $token = $this->getToken();
-        /** @var Refund $model */
-        $model = $this->getModel();
-        $hash = $token->getPrivateKey().$model->getOrderId().$this->getIpAddress().$model->getTransactionDate();
-
-        return $token->getPublicKey().':'.base64_encode(sha1($hash, true));
     }
 }

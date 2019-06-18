@@ -12,6 +12,7 @@ use Payconn\Common\Model\PurchaseInterface;
 use Payconn\Common\Model\RefundInterface;
 use Payconn\Common\ResponseInterface;
 use Payconn\Ipara\Request\AuthorizeRequest;
+use Payconn\Ipara\Request\CompleteRequest;
 use Payconn\Ipara\Request\PurchaseRequest;
 use Payconn\Ipara\Request\RefundRequest;
 
@@ -34,9 +35,9 @@ class Ipara extends AbstractGateway
         return $this->createRequest(AuthorizeRequest::class, $authorize);
     }
 
-    public function complete(CompleteInterface $model): ResponseInterface
+    public function complete(CompleteInterface $complete): ResponseInterface
     {
-        // TODO: Implement complete() method.
+        return $this->createRequest(CompleteRequest::class, $complete);
     }
 
     public function refund(RefundInterface $refund): ResponseInterface
