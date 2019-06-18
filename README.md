@@ -26,7 +26,6 @@ processing library for PHP. This package implements common classes required by P
 * authorize
 * complete
 * refund
-* cancel
 
 ## Basic Usage
 ```php
@@ -45,7 +44,8 @@ $purchase->setFirstName('Murat');
 $purchase->setLastName('Sac');
 $purchase->setEmail('muratsac@mail.com');
 $purchase->addProduct((new Product('001', 'Test', 100)));
-$purchase->setCreditCard((new CreditCard('4282209027132016', '2024', '12', '358'))->setHolderName('MuratSac'));
+$purchase->setCreditCard((new CreditCard('4282209027132016', '2024', '12', '358'))
+    ->setHolderName('MuratSac'));
 $purchase->generateOrderId();
 $response = (new Ipara($token))->purchase($purchase);
 if($response->isSuccessful()){
