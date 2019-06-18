@@ -8,28 +8,16 @@ class AuthorizeResponse extends AbstractResponse
 {
     public function isSuccessful(): bool
     {
-        if (0 == $this->getParameters()->get('result')) {
-            return false;
-        }
-
         return true;
     }
 
     public function getResponseMessage(): string
     {
-        if (!$this->isSuccessful()) {
-            return $this->getParameters()->get('errorMessage');
-        }
-
         return 'Redirected';
     }
 
     public function getResponseCode(): string
     {
-        if (!$this->isSuccessful()) {
-            return $this->getParameters()->get('errorCode');
-        }
-
         return '01';
     }
 

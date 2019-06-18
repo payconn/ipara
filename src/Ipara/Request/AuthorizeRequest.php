@@ -6,6 +6,7 @@ use Payconn\Common\HttpClient;
 use Payconn\Common\ResponseInterface;
 use Payconn\Ipara\Model\Authorize;
 use Payconn\Ipara\Response\AuthorizeResponse;
+use Payconn\Ipara\Token;
 
 class AuthorizeRequest extends IparaRequest
 {
@@ -13,6 +14,22 @@ class AuthorizeRequest extends IparaRequest
     {
         /** @var Authorize $model */
         $model = $this->getModel();
+        /** @var Token $token */
+        $token = $this->getToken();
+
+        $hash = $token->getPrivateKey().
+            $model->getOrderId().
+            $this->getAmount().
+            $this->getMode().
+            $model->getCreditCard()->getHolderName().
+            $model->getCreditCard()->getNumber().
+            $model->getCreditCard()->getExpireMonth()->format('m').
+            $model->getCreditCard()->getExpireYear()->format('y').
+            $model->getCreditCard()->getCvv().
+            $model->getFirstName().
+            $model->getLastName().
+            $model->getEmail().
+            $this->transactionDate;
 
         /** @var HttpClient $httpClient */
         $httpClient = $this->getHttpClient();
@@ -33,8 +50,8 @@ class AuthorizeRequest extends IparaRequest
                 'successUrl' => $model->getSuccessfulUrl(),
                 'failureUrl' => $model->getFailureUrl(),
                 'amount' => $this->getAmount(),
-                'token' => $this->getPurchasingTokenHash(),
                 'transactionDate' => $this->transactionDate,
+                'token' => $token->getPublicKey().':'.base64_encode(sha1($hash, true)),
             ],
         ]);
 

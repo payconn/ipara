@@ -4,30 +4,25 @@ namespace Payconn\Ipara\Request;
 
 use Payconn\Common\HttpClient;
 use Payconn\Common\ResponseInterface;
-use Payconn\Ipara\Model\Purchase;
-use Payconn\Ipara\Response\PurchaseResponse;
+use Payconn\Ipara\Model\Complete;
+use Payconn\Ipara\Response\CompleteResponse;
 use Payconn\Ipara\Token;
 
-class PurchaseRequest extends IparaRequest
+class CompleteRequest extends IparaRequest
 {
     public function send(): ResponseInterface
     {
-        /** @var Purchase $model */
+        /** @var Complete $model */
         $model = $this->getModel();
         /** @var Token $token */
         $token = $this->getToken();
 
         $body = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><auth></auth>');
-        $body->addChild('threeD', 'false');
-        $body->addChild('mode', $this->getMode());
-        $body->addChild('cardOwnerName', $model->getCreditCard()->getHolderName());
-        $body->addChild('cardNumber', $model->getCreditCard()->getNumber());
-        $body->addChild('cardExpireMonth', $model->getCreditCard()->getExpireMonth()->format('m'));
-        $body->addChild('cardExpireYear', $model->getCreditCard()->getExpireYear()->format('y'));
-        $body->addChild('cardCvc', $model->getCreditCard()->getCvv());
-        $body->addChild('installment', (string) $model->getInstallment());
-        $body->addChild('orderId', $model->getOrderId());
-        $body->addChild('amount', (string) $this->getAmount());
+        $body->addChild('threeD', 'true');
+        $body->addChild('mode', $model->getReturnParams()->get('mode'));
+        $body->addChild('orderId', $model->getReturnParams()->get('orderId'));
+        $body->addChild('amount', $model->getReturnParams()->get('amount'));
+        $body->addChild('threeDSecureCode', $model->getReturnParams()->get('threeDSecureCode'));
 
         $purchaser = $body->addChild('purchaser');
         $purchaser->addChild('name', $model->getFirstName());
@@ -45,18 +40,11 @@ class PurchaseRequest extends IparaRequest
         }
 
         $hash = $token->getPrivateKey().
-            $model->getOrderId().
-            $this->getAmount().
-            $this->getMode().
-            $model->getCreditCard()->getHolderName().
-            $model->getCreditCard()->getNumber().
-            $model->getCreditCard()->getExpireMonth()->format('m').
-            $model->getCreditCard()->getExpireYear()->format('y').
-            $model->getCreditCard()->getCvv().
-            $model->getFirstName().
-            $model->getLastName().
-            $model->getEmail().
-            $this->transactionDate;
+            $model->getReturnParams()->get('orderId').
+            $model->getReturnParams()->get('amount').
+            $model->getReturnParams()->get('mode').
+            $model->getReturnParams()->get('threeDSecureCode').
+            $model->getReturnParams()->get('transactionDate');
 
         /** @var HttpClient $httpClient */
         $httpClient = $this->getHttpClient();
@@ -66,11 +54,11 @@ class PurchaseRequest extends IparaRequest
                 'Accept' => 'application/xml',
                 'Content-type' => 'application/xml',
                 'version' => '1.0',
-                'transactionDate' => $this->transactionDate,
                 'token' => $token->getPublicKey().':'.base64_encode(sha1($hash, true)),
+                'transactionDate' => $model->getReturnParams()->get('transactionDate'),
             ],
         ]);
 
-        return new PurchaseResponse($this->getModel(), (array) @simplexml_load_string($response->getBody()->getContents()));
+        return new CompleteResponse($this->getModel(), (array) @simplexml_load_string($response->getBody()->getContents()));
     }
 }

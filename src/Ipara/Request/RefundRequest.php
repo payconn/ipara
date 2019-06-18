@@ -6,6 +6,7 @@ use Payconn\Common\HttpClient;
 use Payconn\Common\ResponseInterface;
 use Payconn\Ipara\Model\Refund;
 use Payconn\Ipara\Response\RefundResponse;
+use Payconn\Ipara\Token;
 
 class RefundRequest extends IparaRequest
 {
@@ -13,12 +14,16 @@ class RefundRequest extends IparaRequest
     {
         /** @var Refund $model */
         $model = $this->getModel();
+        /** @var Token $token */
+        $token = $this->getToken();
+        $hash = $token->getPrivateKey().$model->getOrderId().$this->getIpAddress().$model->getTransactionDate();
+
         /** @var HttpClient $httpClient */
         $httpClient = $this->getHttpClient();
         $headers = [
             'version' => '1.0',
-            'token' => $this->getRefundTokenHash(),
             'transactionDate' => $model->getTransactionDate(),
+            'token' => $token->getPublicKey().':'.base64_encode(sha1($hash, true)),
         ];
         // inquiry refundHash
         $response = $httpClient->request('POST', $model->getBaseUrl().'/corporate/payment/refund/inquiry', [
