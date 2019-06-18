@@ -23,8 +23,8 @@ class AuthorizeRequest extends IparaRequest
             $this->getMode().
             $model->getCreditCard()->getHolderName().
             $model->getCreditCard()->getNumber().
-            $model->getCreditCard()->getExpireMonth()->format('m').
-            $model->getCreditCard()->getExpireYear()->format('y').
+            $model->getCreditCard()->getExpireMonth().
+            $model->getCreditCard()->getExpireYear().
             $model->getCreditCard()->getCvv().
             $model->getFirstName().
             $model->getLastName().
@@ -40,8 +40,8 @@ class AuthorizeRequest extends IparaRequest
                 'orderId' => $model->getOrderId(),
                 'cardOwnerName' => $model->getCreditCard()->getHolderName(),
                 'cardNumber' => $model->getCreditCard()->getNumber(),
-                'cardExpireMonth' => $model->getCreditCard()->getExpireMonth()->format('m'),
-                'cardExpireYear' => $model->getCreditCard()->getExpireYear()->format('y'),
+                'cardExpireMonth' => $model->getCreditCard()->getExpireMonth(),
+                'cardExpireYear' => $model->getCreditCard()->getExpireYear(),
                 'installment' => $model->getInstallment(),
                 'cardCvc' => $model->getCreditCard()->getCvv(),
                 'purchaserName' => $model->getFirstName(),

@@ -22,8 +22,8 @@ class PurchaseRequest extends IparaRequest
         $body->addChild('mode', $this->getMode());
         $body->addChild('cardOwnerName', $model->getCreditCard()->getHolderName());
         $body->addChild('cardNumber', $model->getCreditCard()->getNumber());
-        $body->addChild('cardExpireMonth', $model->getCreditCard()->getExpireMonth()->format('m'));
-        $body->addChild('cardExpireYear', $model->getCreditCard()->getExpireYear()->format('y'));
+        $body->addChild('cardExpireMonth', $model->getCreditCard()->getExpireMonth());
+        $body->addChild('cardExpireYear', $model->getCreditCard()->getExpireYear());
         $body->addChild('cardCvc', $model->getCreditCard()->getCvv());
         $body->addChild('installment', (string) $model->getInstallment());
         $body->addChild('orderId', $model->getOrderId());
@@ -50,8 +50,8 @@ class PurchaseRequest extends IparaRequest
             $this->getMode().
             $model->getCreditCard()->getHolderName().
             $model->getCreditCard()->getNumber().
-            $model->getCreditCard()->getExpireMonth()->format('m').
-            $model->getCreditCard()->getExpireYear()->format('y').
+            $model->getCreditCard()->getExpireMonth().
+            $model->getCreditCard()->getExpireYear().
             $model->getCreditCard()->getCvv().
             $model->getFirstName().
             $model->getLastName().
