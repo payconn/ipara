@@ -22,10 +22,11 @@ abstract class IparaRequest extends AbstractRequest
 
     public function getAmount(): ?float
     {
-        if ($this->getModel() instanceof Purchase
-            || $this->getModel() instanceof Authorize
-            || $this->getModel() instanceof Refund) {
-            return $this->getModel()->getAmount() * 100;
+        $model = $this->getModel();
+        if ($model instanceof Purchase
+            || $model instanceof Authorize
+            || $model instanceof Refund) {
+            return $model->getAmount() * 100;
         }
 
         return null;
