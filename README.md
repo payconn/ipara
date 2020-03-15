@@ -1,8 +1,24 @@
-# Payconn: Ipara
+<p align="center">
+<a href="https://ipara.com.tr/"><img width="200" src="https://ipara.com.tr/assets/img/ipara-logo.svg"></a>
+</p>
 
-**iPara gateway for Payconn payment processing library**
+<h3 align="center">Payconn: iPara</h3>
 
-[![Build Status](https://travis-ci.com/payconn/ipara.svg?branch=master)](https://travis-ci.com/payconn/ipara)
+<p align="center">iPara gateway for Payconn payment processing library</p>
+<p align="center">
+  <a href="https://travis-ci.com/payconn/ipara"><img src="https://travis-ci.com/payconn/ipara.svg?branch=master" /></a>
+</p>
+<hr>
+
+<p align="center">
+<b><a href="#installation">Installation</a></b>
+|
+<b><a href="#supported-methods">Supported Methods</a></b>
+|
+<b><a href="#basic-usages">Basic Usages</a></b>
+</p>
+<hr>
+<br>
 
 [Payconn](https://github.com/payconn/common) is a framework agnostic, multi-gateway payment
 processing library for PHP. This package implements common classes required by Payconn.
