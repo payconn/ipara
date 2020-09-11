@@ -19,13 +19,13 @@ class Purchase extends AbstractModel implements PurchaseInterface
     use Currency;
     use OrderId;
 
-    protected $firstName;
+    protected string $firstName;
 
-    protected $lastName;
+    protected string $lastName;
 
-    protected $email;
+    protected string $email;
 
-    protected $products;
+    protected array $products;
 
     public function getFirstName(): string
     {
@@ -57,7 +57,7 @@ class Purchase extends AbstractModel implements PurchaseInterface
         $this->email = $email;
     }
 
-    public function addProduct(Product $product)
+    public function addProduct(Product $product): void
     {
         $this->products[] = $product;
     }

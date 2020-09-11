@@ -6,9 +6,9 @@ use Payconn\Common\TokenInterface;
 
 class Token implements TokenInterface
 {
-    private $publicKey;
+    private string $publicKey;
 
-    private $privateKey;
+    private string $privateKey;
 
     public function __construct(string $publicKey, string $privateKey)
     {
