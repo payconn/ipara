@@ -12,9 +12,9 @@ class Refund extends AbstractModel implements RefundInterface
     use Amount;
     use OrderId;
 
-    protected \DateTime $transactionDate;
+    protected $transactionDate;
 
-    protected string $orderHash;
+    protected $orderHash;
 
     public function getTransactionDate(): string
     {

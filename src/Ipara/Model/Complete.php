@@ -9,15 +9,15 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 class Complete extends AbstractModel implements CompleteInterface
 {
-    protected ParameterBag $returnParams;
+    protected $returnParams;
 
-    protected string $firstName;
+    protected $firstName;
 
-    protected string $lastName;
+    protected $lastName;
 
-    protected string $email;
+    protected $email;
 
-    protected array $products;
+    protected $products;
 
     public function getFirstName(): string
     {

@@ -21,13 +21,13 @@ class Authorize extends AbstractModel implements AuthorizeInterface
     use OrderId;
     use Currency;
 
-    protected string $firstName;
+    protected $firstName;
 
-    protected string $lastName;
+    protected $lastName;
 
-    protected string $email;
+    protected $email;
 
-    protected ?array $products;
+    protected $products;
 
     public function getFirstName(): string
     {

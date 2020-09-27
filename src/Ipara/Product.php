@@ -4,13 +4,13 @@ namespace Payconn\Ipara;
 
 class Product
 {
-    private string $code;
+    private $code;
 
-    private string $name;
+    private $name;
 
-    private float $price;
+    private $price;
 
-    private int $quantity;
+    private $quantity;
 
     public function __construct(string $code, string $name, float $price, int $quantity = 1)
     {

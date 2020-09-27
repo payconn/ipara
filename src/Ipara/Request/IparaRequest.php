@@ -12,7 +12,7 @@ use Payconn\Ipara\Model\Refund;
 
 abstract class IparaRequest extends AbstractRequest
 {
-    protected string $transactionDate;
+    protected $transactionDate;
 
     public function __construct(TokenInterface $token, HttpClientInterface $httpClient, ModelInterface $model)
     {
