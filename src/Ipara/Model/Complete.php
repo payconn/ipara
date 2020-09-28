@@ -49,7 +49,7 @@ class Complete extends AbstractModel implements CompleteInterface
         $this->email = $email;
     }
 
-    public function addProduct(Product $product)
+    public function addProduct(Product $product): void
     {
         $this->products[] = $product;
     }
@@ -62,7 +62,7 @@ class Complete extends AbstractModel implements CompleteInterface
         return $this->products;
     }
 
-    public function setReturnParams(array $returnParams)
+    public function setReturnParams(array $returnParams): void
     {
         $this->returnParams = new ParameterBag($returnParams);
     }

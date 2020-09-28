@@ -57,7 +57,7 @@ class Purchase extends AbstractModel implements PurchaseInterface
         $this->email = $email;
     }
 
-    public function addProduct(Product $product)
+    public function addProduct(Product $product): void
     {
         $this->products[] = $product;
     }
